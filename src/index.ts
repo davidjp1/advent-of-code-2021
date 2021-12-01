@@ -22,7 +22,7 @@ function getUserInput(question: string): Promise<string> {
 
   try {
     const selected = require(`./day${day}/solution.ts`);
-    const input = await fs.readFileSync(path.resolve(__dirname, `./day${day}/part${part}.csv`), 'utf8').split('\n');
+    const input = fs.readFileSync(path.resolve(__dirname, `./day${day}/part${part}.csv`), 'utf8').split('\n');
     console.log(`Result:\n\n${selected.run(part, input)}`);
   } catch (e) {
     console.log('Error occurred running solution\n\n', e);

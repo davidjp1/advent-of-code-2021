@@ -1,41 +1,26 @@
 export function run(part: number, input: string[]): number {
     if(part === 1) {
-        return part1(input);
+        return calculateBestBoard(input, Number.MAX_VALUE, (a,b) => a > b);
     }    
     if(part === 2) {
-        return part2(input);
+        return calculateBestBoard(input, 0, (a,b) => a < b);
     }
     throw Error(`Part ${part} not implemented`);
 }
 
-function part1(input: string[]): number {
+function calculateBestBoard(input: string[], worstCaseTime: number, comparison: (previousBestTime: number, currentTime: number) => boolean){
     const [numbers, bingoCards] = preProcess(input);
-    let fastestTime = Number.MAX_VALUE;
-    let fastestCard = bingoCards[0];
+    let bestTime = worstCaseTime;
+    let bestCard = bingoCards[0];
     bingoCards.forEach(card => {
         const timeToComplete = attemptCard(card, numbers);
-        if(timeToComplete < fastestTime){
-            fastestTime = timeToComplete;
-            fastestCard = card;
+        if(comparison(bestTime, timeToComplete)){
+            bestTime = timeToComplete;
+            bestCard = card;
         }
     });
-    return boardScore(fastestCard, numbers.slice(0,fastestTime));
+    return boardScore(bestCard, numbers.slice(0,bestTime));
 }
-
-function part2(input: string[]): number {
-    const [numbers, bingoCards] = preProcess(input);
-    let slowestTime = 0;
-    let slowestCard = bingoCards[0];
-    bingoCards.forEach(card => {
-        const timeToComplete = attemptCard(card, numbers);
-        if(timeToComplete > slowestTime){
-            slowestTime = timeToComplete;
-            slowestCard = card;
-        }
-    });
-    return boardScore(slowestCard, numbers.slice(0,slowestTime));
-}
-
 
 function attemptCard(card: number[][], numbers: number[]): number {
     const expandedCard: number[][] = JSON.parse(JSON.stringify(card));    

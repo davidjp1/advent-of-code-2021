@@ -12,7 +12,7 @@ function part1(input: string[]): number {
     let horizontalDistance = 0;
     input.map(line => {
         const [direction,distanceStr] = line.split(' ');
-        const distance = parseInt(distanceStr);
+        const distance = parseInt(distanceStr, 10);
         if (direction === 'up') {
             depth -= distance;
         } else if (direction === 'down') {
@@ -23,6 +23,7 @@ function part1(input: string[]): number {
     });
     return depth * horizontalDistance;
 }
+
 function part2(input: string[]): number {
     let aim = 0;
     let depth = 0;

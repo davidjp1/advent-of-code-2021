@@ -7,6 +7,12 @@ const readline = rl.createInterface({
     output: process.stdout
 });
 
+const defaultConsole = console.log;
+const custLog = (message?: any, ...opts: any) => {
+    defaultConsole(`[${new Date().toISOString().slice(11,19)}]:`,message, ...opts);
+};
+console.log = custLog;
+
 function getUserInput(question: string): Promise<string> {
     return new Promise((res) => {
         readline.question(question, (answer: string) => {

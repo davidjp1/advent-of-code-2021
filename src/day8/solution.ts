@@ -1,9 +1,7 @@
 export function run(part: number, input: string[]): number {
     const processed = input.map(a => {
         const [inputRaw,outputRaw] = a.split(' | ');
-        const inputSignals = inputRaw.split(' ');
-        const outputSignals = outputRaw.split(' ');
-        return {inputs: inputSignals, outputs: outputSignals};
+        return {inputs: inputRaw.split(' '), outputs: outputRaw.split(' ')};
     });
     if(part === 1){
         return part1(processed);
@@ -23,7 +21,7 @@ function part1(data: {inputs: string[], outputs: string[]}[]) : number {
             occurences[number] = (occurences[number] || 0) + 1;
         });
     });
-    return (occurences[1] || 0) + (occurences[4] || 0) + (occurences[7] || 0) + (occurences[8] || 0);
+    return occurences[1] + occurences[4] + occurences[7] + occurences[8];
 }
 
 function part2(data: {inputs: string[], outputs: string[]}[]) : number {
